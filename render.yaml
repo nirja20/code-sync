@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: college-code-editor
+    env: node
+    buildCommand: apt-get install -y gcc g++ default-jdk && npm install && npm run build
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
