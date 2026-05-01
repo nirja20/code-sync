@@ -1,11 +1,14 @@
 # Use official Node.js LTS on Debian Bullseye
 FROM node:20-bullseye
 
-# Install Java JDK, GCC, and G++ via apt (we have root inside Docker)
+# Install all language runtimes/compilers needed by the code editor
 RUN apt-get update && apt-get install -y \
     default-jdk \
     gcc \
     g++ \
+    python3 \
+    python3-pip \
+    && ln -sf /usr/bin/python3 /usr/bin/python \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
