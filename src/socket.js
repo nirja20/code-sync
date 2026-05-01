@@ -7,5 +7,13 @@ export const initSocket = async () => {
         timeout: 10000,
         transports: ['websocket'],
     };
-    return io(process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000', options);
+
+    // In production (Render), frontend & backend are the same server.
+    // In local dev, backend runs on :5000 separately.
+    const serverUrl = process.env.REACT_APP_BACKEND_URL
+        || (window.location.hostname === 'localhost'
+            ? 'http://localhost:5000'
+            : window.location.origin);
+
+    return io(serverUrl, options);
 };
