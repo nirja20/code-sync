@@ -26,6 +26,7 @@ const EditorPage = () => {
   const [ownerSocketId, setOwnerSocketId] = useState(null);
   const [mySocketId, setMySocketId] = useState(null);
   const [restoredCode, setRestoredCode] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Initialize role from localStorage or default to 'viewer'
   const [myRole, setMyRole] = useState(() => {
@@ -265,9 +266,9 @@ const EditorPage = () => {
   }
 
   function leaveRoom() {
-    // Clear localStorage for this room
     localStorage.removeItem(`room-${roomId}-role`);
     localStorage.removeItem(`room-${roomId}-username`);
+    setSidebarOpen(false);
     reactNavigator("/");
   }
 
@@ -300,7 +301,22 @@ const EditorPage = () => {
 
   return (
     <div className="mainWrap">
-      <div className="aside">
+      {/* Hamburger button — only visible on mobile */}
+      <button
+        className="hamburgerBtn"
+        onClick={() => setSidebarOpen((o) => !o)}
+        aria-label="Toggle sidebar"
+      >
+        {sidebarOpen ? "✕" : "☰"}
+      </button>
+
+      {/* Overlay — closes sidebar when tapped */}
+      <div
+        className={`sidebarOverlay ${sidebarOpen ? "open" : ""}`}
+        onClick={() => setSidebarOpen(false)}
+      />
+
+      <div className={`aside ${sidebarOpen ? "mobileOpen" : ""}`}>
         <div className="asideInner">
           <div className="logo">
             <img className="logoImage" src="/code-sync.png" alt="logo" />

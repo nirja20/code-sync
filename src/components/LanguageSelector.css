@@ -1,17 +1,20 @@
 .languageSelectorContainer {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    flex-shrink: 1;
+    min-width: 0;
 }
 
 .languageLabel {
     color: #cccccc;
     font-size: 14px;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 .languageSelect {
-    padding: 8px 12px;
+    padding: 7px 10px;
     border-radius: 5px;
     border: 1px solid #404040;
     background: #2d2d30;
@@ -21,25 +24,24 @@
     cursor: pointer;
     outline: none;
     transition: all 0.2s ease;
-    min-width: 150px;
+    min-width: 0;
+    width: 100%;
+    max-width: 180px;
 }
 
-.languageSelect:hover {
-    border-color: #4aed88;
-}
-
+.languageSelect:hover { border-color: #4aed88; }
 .languageSelect:focus {
     border-color: #4aed88;
     box-shadow: 0 0 0 2px rgba(74, 237, 136, 0.2);
 }
+.languageSelect:disabled { opacity: 0.5; cursor: not-allowed; }
+.languageSelect option { background: #2d2d30; color: #cccccc; }
 
-.languageSelect:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+@media (max-width: 768px) {
+    .languageLabel { display: none; } /* hide "Language:" label on mobile — saves space */
+    .languageSelect { max-width: 130px; font-size: 13px; padding: 6px 8px; }
 }
 
-.languageSelect option {
-    background: #2d2d30;
-    color: #cccccc;
-    padding: 8px;
+@media (max-width: 480px) {
+    .languageSelect { max-width: 110px; font-size: 12px; }
 }

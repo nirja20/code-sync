@@ -10,6 +10,34 @@
     border-left: 1px solid #333;
 }
 
+@media (max-width: 768px) {
+    .terminalContainer {
+        border-left: none;
+        border-top: 1px solid #333;
+        border-radius: 0;
+    }
+
+    .terminalOutput {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+
+    .terminalHeader {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .terminalInput {
+        font-size: 12px;
+    }
+
+    .terminalPlaceholder {
+        font-size: 12px;
+        padding: 20px 12px;
+    }
+}
+
+
 .terminalHeader {
     display: flex;
     justify-content: space-between;
