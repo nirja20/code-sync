@@ -161,7 +161,8 @@ try {
                         encoding: 'utf8'
                     });
                     command = 'java';
-                    args = ['-cp', tempDir, className];
+                    // -XX:TieredStopAtLevel=1 skips JIT → much faster startup on low-CPU servers
+                    args = ['-XX:TieredStopAtLevel=1', '-cp', tempDir, className];
                 } catch (compileError) {
                     io.in(roomId).emit(ACTIONS.CODE_ERROR, {
                         output: compileError.stderr || compileError.message,
@@ -305,16 +306,17 @@ try {
             delete activeProcesses[roomId];
         });
 
-        // Set timeout
+        // Java JVM startup is slow on low-CPU servers → give it 30s; others get 15s
+        const TIMEOUT_MS = language.toLowerCase() === 'java' ? 30000 : 15000;
         setTimeout(() => {
             if (activeProcesses[roomId]) {
                 childProcess.kill();
                 io.in(roomId).emit(ACTIONS.CODE_ERROR, {
-                    output: '\n\nExecution timeout (10 seconds exceeded)',
+                    output: `\n\nExecution timeout (${TIMEOUT_MS / 1000} seconds exceeded)`,
                 });
                 delete activeProcesses[roomId];
             }
-        }, 10000);
+        }, TIMEOUT_MS);
 
     } catch (error) {
         io.in(roomId).emit(ACTIONS.CODE_ERROR, {
