@@ -1,9 +1,7 @@
 services:
   - type: web
     name: college-code-editor
-    env: node
-    buildCommand: npm install && npm run build
-    startCommand: node server.js
+    env: docker
     envVars:
       - key: NODE_ENV
         value: production
